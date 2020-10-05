@@ -1,7 +1,7 @@
 //yigit suoglu 
 // parameterised divider module
 // dividend = divisor * quotient + remainder
-module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_valid, idle);
+module divider_param(clk, rst, strt, dividend, divisor, quotient, remainder, not_valid, idle);
     parameter IDLE = 2'b00, PRECALC = 2'b01, CALC = 2'b11, POSTCALC = 2'b10;
     parameter BITSIZE = 8;
     parameter INDEXSIZE = 3; //= log2(BITSIZE)

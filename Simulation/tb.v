@@ -33,5 +33,20 @@ module testbench();
             strt <= 0;
             dividend <= 8'd0;
             divisor <= 8'd0;
+            #3
+            rst <= 1;
+            #10
+            rst <= 0;
+            #10
+            dividend <= 8'd25;
+            divisor <= 8'd5;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200
+
+
+            $finish;
         end
 endmodule//testbench

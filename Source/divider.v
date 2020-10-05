@@ -118,7 +118,7 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
         end 
     
 
-    //quotient calculations
+    //handle quotient 
     always@(posedge clk)
         begin
             case(state)
@@ -129,6 +129,10 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
                 CALC: 
                     begin
                         quotient[q_index] <= sign_of_test_sub;
+                    end
+                POSTCALC: 
+                    begin
+                        quotient[7:1] <= (divisor_reg[6]) ? 7'd0 : quotient[7:1];
                     end
             endcase
         end

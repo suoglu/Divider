@@ -15,7 +15,7 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
     reg [1:0] state; //00: idle, 01: precalculate, 11: calcuate
     reg [2:0] q_index;
 
-    assign not_valid = (~|divisor) | (dividend < divisor); //not valid if divisor is 0 or dividend is smaller then divisor
+    assign not_valid = ~|divisor; //not valid if divisor is 0
     assign idle = ~|state; //state 00
     assign test_sub_res = dividend_reg + (~divisor_reg) + 9'd1; //test subtraction
     assign sign_of_test_sub = ~test_sub_res[8];
@@ -35,7 +35,7 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
                             begin
                                 if(strt)
                                     begin
-                                        state <= (divisor[7]) ? CALC : PRECALC;
+                                        state <= (not_valid) ? POSTCALC : ((divisor[7]) ? CALC : PRECALC);
                                     end
                             end
                         PRECALC:

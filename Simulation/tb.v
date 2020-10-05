@@ -37,16 +37,122 @@ module testbench();
             rst <= 1;
             #10
             rst <= 0;
-            #10
+            #10 //division without remainder 1
             dividend <= 8'd25;
             divisor <= 8'd5;
             #10
             strt <= 1;
             #10
             strt <= 0;
-            #200
-
-
+            #200 //division without remainder 2
+            dividend <= 8'd126;
+            divisor <= 8'd3;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200 //division without remainder 3
+            dividend <= 8'd135;
+            divisor <= 8'd45;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//division with remainder 1
+            dividend <= 8'd200;
+            divisor <= 8'd91;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//division with remainder 2
+            dividend <= 8'd142;
+            divisor <= 8'd11;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//division with remainder 3
+            dividend <= 8'd177;
+            divisor <= 8'd77;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//dividend max
+            dividend <= 8'b11111111;
+            divisor <= 8'd61;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//dividend and divisor max *********NEEDS FIX*********
+            dividend <= 8'b11111111;
+            divisor <= 8'b11111111;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//dividend = divisor
+            dividend <= 8'd123;
+            divisor <= 8'd123;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//divisor is 0
+            dividend <= 8'd96;
+            divisor <= 8'd0;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//dividend is 0
+            dividend <= 8'd0;
+            divisor <= 8'd21;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//dividend < divisor 1
+            dividend <= 8'd100;
+            divisor <= 8'd188;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//dividend < divisor 2
+            dividend <= 8'd78;
+            divisor <= 8'd250;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//dividend < divisor 3
+            dividend <= 8'd165;
+            divisor <= 8'd193;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #200//start stays high longer
+            dividend <= 8'd81;
+            divisor <= 8'd21;
+            #10
+            strt <= 1;
+            #100
+            strt <= 0;
+            #110//dividend and divisor changes during operation
+            dividend <= 8'd200;
+            divisor <= 8'd20;
+            #10
+            strt <= 1;
+            #10
+            strt <= 0;
+            #30
+            dividend <= 8'd99;
+            divisor <= 8'd55;
+            #170
             $finish;
         end
 endmodule//testbench

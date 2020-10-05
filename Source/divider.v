@@ -18,7 +18,7 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
     assign not_valid = (~|divisor) | (dividend < divisor); //not valid if divisor is 0 or dividend is smaller then divisor
     assign idle = ~|state; //state 00
     assign test_sub_res = dividend_reg + (~divisor_reg) + 9'd1; //test subtraction
-    assign sign_of_test_sub = test_sub_res[8];
+    assign sign_of_test_sub = ~test_sub_res[8];
     assign update_divident = sign_of_test_sub;
 
     //state transactions
@@ -89,7 +89,7 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
             case(state)
                 IDLE://while at idle state update dividend register
                     begin
-                        dividend_reg <= {1'b1, dividend};
+                        dividend_reg <= {1'b0, dividend};
                     end
                 CALC:
                     begin
@@ -128,12 +128,26 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
                     end
                 CALC: 
                     begin
-                        quotient[q_index] <= ~sign_of_test_sub;
+                        quotient[q_index] <= sign_of_test_sub;
                     end
             endcase
         end
     
     
-    
+    //debug code
+    initial
+        begin
+             $dumpfile("internal_signals.vcd");
+             $dumpvars(0, state);
+             $dumpvars(1, dividend_reg);
+             $dumpvars(2, divisor_reg);
+             $dumpvars(3, test_sub_res);
+             $dumpvars(4, sign_of_test_sub);
+             $dumpvars(5, q_index);
+             $dumpvars(6, divisor);
+             $dumpvars(7, quotient);
+             $dumpvars(8, remainder);
+        end
+
 
 endmodule

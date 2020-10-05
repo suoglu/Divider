@@ -1,7 +1,7 @@
 //yigit suoglu
 //board file
 
-module board(clk, btnC, btnU, sw, led);
+module board(clk, btnC, btnU, sw, led, seg, an);
 input clk, btnC, btnU; //clock, start, reset
 input [15:0] sw; //{dividend, divisor}
 output [15:0] led;
@@ -15,6 +15,7 @@ assign rst = btnU;
 assign dividend = sw[15:8];
 assign divisor = sw[7:0];
 assign seg = {g, f, e, d, c, b, a};
+assign led = {14'b0, not_valid, idle};
 
 ssdMaster ssdDriver(clk, rst, 4'b1111, remainder[3:0], remainder[7:4], quotient[3:0], quotient[7:4], a, b, c, d, e, f, g, an);
 debouncer dbunce(clk, rst, btnC, strt);

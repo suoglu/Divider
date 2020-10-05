@@ -1,14 +1,19 @@
 //testbench for divider
-
+`include "Source/divider_param.v"
+`include "Source/divider_8bit.v"
 `timescale 1ns / 1ps
 
 module testbench();
     reg clk, rst, strt;
     reg [7:0] dividend, divisor;
-    wire [7:0] quotient, remainder;
-    wire not_valid, idle;
+    wire [7:0] quotient_f, remainder_f, quotient_p, remainder_p;
+    wire not_valid_f, idle_f, not_valid_p, idle_p;
+    wire both_equal; //to check whether both modules output same
 
-    divider_8bit uut(clk, rst, strt, dividend, divisor, quotient, remainder, not_valid, idle);
+    assign both_equal = (quotient_f == quotient_p) & (remainder_f == remainder_p) & (not_valid_f == not_valid_p) & (idle_f == idle_p);
+
+    divider_8bit uut0(clk, rst, strt, dividend, divisor, quotient_f, remainder_f, not_valid_f, idle_f);
+    divider_param uut1(clk, rst, strt, dividend, divisor, quotient_p, remainder_p, not_valid_p, idle_p);
 
     always #5 clk <= ~clk;
 
@@ -17,13 +22,18 @@ module testbench();
              $dumpfile("divider_8bit.vcd");
              $dumpvars(0, clk);
              $dumpvars(1, rst);
-             $dumpvars(2, not_valid);
-             $dumpvars(3, idle);
+             $dumpvars(2, not_valid_f);
+             $dumpvars(3, idle_f);
              $dumpvars(4, strt);
              $dumpvars(5, dividend);
              $dumpvars(6, divisor);
-             $dumpvars(7, quotient);
-             $dumpvars(8, remainder);
+             $dumpvars(7, quotient_f);
+             $dumpvars(8, remainder_f);
+             $dumpvars(9, quotient_p);
+             $dumpvars(10, remainder_p);
+             $dumpvars(11, both_equal);
+             $dumpvars(12, not_valid_p);
+             $dumpvars(13, idle_p);
         end
 
     initial

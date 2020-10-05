@@ -1,5 +1,11 @@
 //yigit suoglu
 //board file
+`include "Source/divider_param.v"
+`include "Source/divider_8bit.v"
+`include "Testing/debouncer.v"
+`include "Testing/ssd_util.v"
+`timescale 1ns / 1ps
+`timescale 1ns / 1ps
 
 module board(clk, btnC, btnU, sw, led, seg, an);
 input clk, btnC, btnU; //clock, start, reset

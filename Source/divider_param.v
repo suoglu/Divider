@@ -1,19 +1,21 @@
 //yigit suoglu 
-// 8 bit divider module
+// parameterised divider module
 // dividend = divisor * quotient + remainder
 module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_valid, idle);
     parameter IDLE = 2'b00, PRECALC = 2'b01, CALC = 2'b11, POSTCALC = 2'b10;
+    parameter BITSIZE = 8;
+    parameter INDEXSIZE = 3; //= log2(BITSIZE)
     input clk, rst, strt;
-    input [7:0] dividend, divisor;
-    output reg [7:0] quotient, remainder;
+    input [(BITSIZE-1):0] dividend, divisor;
+    output reg [(BITSIZE-1):0] quotient, remainder;
     output not_valid; //True if divison result is not valid
     output idle; //True when ready to
-    reg [8:0] dividend_reg, divisor_reg; //extra bit for sign check
+    reg [BITSIZE:0] dividend_reg, divisor_reg; //extra bit for sign check
     wire update_divident; //update dividend value after test substraction, little typo 
     wire sign_of_test_sub; //0 for positive, 1 for negative
-    wire [8:0] test_sub_res; //result of test substraction
+    wire [BITSIZE:0] test_sub_res; //result of test substraction
     reg [1:0] state; //00: idle, 01: precalculate, 11: calcuate
-    reg [2:0] q_index;
+    reg [(INDEXSIZE-1):0] q_index;
 
     assign not_valid = ~|divisor; //not valid if divisor is 0
     assign idle = ~|state; //state 00
@@ -40,11 +42,11 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
                             end
                         PRECALC:
                             begin
-                                state <= (divisor_reg[6]) ? CALC : PRECALC;
+                                state <= (divisor_reg[BITSIZE-2]) ? CALC : PRECALC;
                             end
                         CALC:
                             begin
-                               state <= (q_index == 3'd0) ? POSTCALC : CALC; 
+                               state <= (q_index == 0) ? POSTCALC : CALC; 
                             end
                         POSTCALC:
                             begin
@@ -77,7 +79,7 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
     //handle reminder
     always@(posedge clk)
         begin //remaining number at divident is the remmainder
-            remainder <= (state == POSTCALC) ? dividend_reg[7:0] : remainder; 
+            remainder <= (state == POSTCALC) ? dividend_reg[(BITSIZE-1):0] : remainder; 
         end
     
 
@@ -104,15 +106,15 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
             case(state)
                 IDLE:
                     begin
-                        q_index <= 3'd0;
+                        q_index <= 0;
                     end
                 PRECALC:
                     begin
-                        q_index <= q_index + 3'd1;
+                        q_index <= q_index + 1;
                     end
                 CALC:
                     begin
-                        q_index <= q_index - 3'd1;
+                        q_index <= q_index - 1;
                     end
             endcase
         end 
@@ -124,7 +126,7 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
             case(state)
                 PRECALC: //at pre calculate state reset quotient
                     begin
-                        quotient <= 8'd0;
+                        quotient <= 0;
                     end
                 CALC: 
                     begin
@@ -132,7 +134,7 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
                     end
                 POSTCALC: 
                     begin
-                        quotient[7:1] <= (divisor_reg[6]) ? 7'd0 : quotient[7:1];
+                        quotient[(BITSIZE-1):1] <= (divisor_reg[BITSIZE-2]) ? 0 : quotient[(BITSIZE-1):1];
                     end
             endcase
         end

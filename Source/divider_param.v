@@ -2,9 +2,10 @@
 // parameterised divider module
 // dividend = divisor * quotient + remainder
 module divider_param(clk, rst, strt, dividend, divisor, quotient, remainder, not_valid, idle);
-    parameter IDLE = 2'b00, PRECALC = 2'b01, CALC = 2'b11, POSTCALC = 2'b10;
     parameter BITSIZE = 8;
     parameter INDEXSIZE = 3; //= log2(BITSIZE)
+    parameter IDLE = 2'b00, PRECALC = 2'b01, CALC = 2'b11, POSTCALC = 2'b10;
+    
     input clk, rst, strt;
     input [(BITSIZE-1):0] dividend, divisor;
     output reg [(BITSIZE-1):0] quotient, remainder;

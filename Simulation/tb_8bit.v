@@ -13,7 +13,7 @@ module testbench();
     assign both_equal = (quotient_f == quotient_p) & (remainder_f == remainder_p) & (not_valid_f == not_valid_p) & (idle_f == idle_p);
 
     divider_8bit uut0(clk, rst, strt, dividend, divisor, quotient_f, remainder_f, not_valid_f, idle_f);
-    divider_param uut1(clk, rst, strt, dividend, divisor, quotient_p, remainder_p, not_valid_p, idle_p);
+    divider_param #(8,3) uut1(clk, rst, strt, dividend, divisor, quotient_p, remainder_p, not_valid_p, idle_p);
 
     always #5 clk <= ~clk;
 

@@ -38,3 +38,5 @@ Testing will be done on [Digilent Basys 3](https://reference.digilentinc.com/ref
 * Simulation: with Icarus Verilog
   * 8-bit: 5 Oct 2020, test cases can be found on [tb_8bit.v](https://github.com/suoglu/divider/blob/main/Simulation/tb_8bit.v).
   * 32-bit: 6 Oct 2020, test cases can be found on [tb_32bit.v](https://github.com/suoglu/divider/blob/main/Simulation/tb_32bit.v).
+* On FPGA: 
+  * 8-bit: 6 Oct 2020, Test cases: 240/0, 0/179, 132/12, 250/25, 202/61, 28/165, 40/229, 174/5, 222/21, 230/53, 255/255, 0/255, 255/0, 225/255, 255/13

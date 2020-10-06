@@ -14,10 +14,13 @@ Testing will be done on [Digilent Basys 3](https://reference.digilentinc.com/ref
 
 * `Reset`: Upper Button (btnU)
 * `Start`: Center Button (btnC)
+* `Switch UUT`: Lower Button (btnD)
 * `Dividend`: 8 leftmost switches (sw[15:8])
 * `Divisor`: 8 rightmost switches (sw[7:0])
 * `Quotient`: 2 leftmost hexadecimal digits of ssd
 * `Remainder`: 2 rightmost hexadecimal digits of ssd
+* `Selected UUT`: Leftmost led (led[15]), 1 for the parameterised UUT and 0 for the fixed 8-bit UUT
+* `UUT Compare`: 2nd leftmost led (led[14]), both UUT have the same output
 * `idle`: Rightmost led (led[0])
 * `Not valid`: 2nd rightmost led (led[1])
 

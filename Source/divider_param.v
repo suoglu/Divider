@@ -1,9 +1,11 @@
 //yigit suoglu 
-// parameterised divider module
+// parameterised divider module defarult 16bit
 // dividend = divisor * quotient + remainder
+`timescale 1ns / 1ps
+
 module divider_param(clk, rst, strt, dividend, divisor, quotient, remainder, not_valid, idle);
-    parameter BITSIZE = 8;
-    parameter INDEXSIZE = 3; //= log2(BITSIZE)
+    parameter BITSIZE = 16;
+    parameter INDEXSIZE = 4; //= log2(BITSIZE)
     parameter IDLE = 2'b00, PRECALC = 2'b01, CALC = 2'b11, POSTCALC = 2'b10;
     
     input clk, rst, strt;

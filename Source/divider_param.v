@@ -40,7 +40,7 @@ module divider_param(clk, rst, strt, dividend, divisor, quotient, remainder, not
                             begin
                                 if(strt)
                                     begin
-                                        state <= (not_valid) ? POSTCALC : ((divisor[INDEXSIZE-1]) ? CALC : PRECALC);
+                                        state <= (not_valid) ? POSTCALC : ((divisor[BITSIZE-1]) ? CALC : PRECALC);
                                     end
                             end
                         PRECALC:

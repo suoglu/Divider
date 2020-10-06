@@ -23,7 +23,7 @@ module divider_param(clk, rst, strt, dividend, divisor, quotient, remainder, not
     assign not_valid = ~|divisor; //not valid if divisor is 0
     assign idle = ~|state; //state 00
     assign test_sub_res = dividend_reg + (~divisor_reg) + 9'd1; //test subtraction
-    assign sign_of_test_sub = ~test_sub_res[8];
+    assign sign_of_test_sub = ~test_sub_res[BITSIZE];
     assign update_divident = sign_of_test_sub;
 
     //state transactions

@@ -2,7 +2,7 @@
 // 8 bit divider module
 // dividend = divisor * quotient + remainder
 module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, infinite, idle);
-    parameter IDLE = 2'b00, PRECALC = 2'b01, CALC = 2'b11, POSTCALC = 2'b10;
+    localparam IDLE = 2'b00, PRECALC = 2'b01, CALC = 2'b11, POSTCALC = 2'b10;
     input clk, rst, strt;
     input [7:0] dividend, divisor;
     output reg [7:0] quotient, remainder;

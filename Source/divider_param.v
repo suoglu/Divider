@@ -3,15 +3,14 @@
 // dividend = divisor * quotient + remainder
 `timescale 1ns / 1ps
 
-module divider_param(clk, rst, strt, dividend, divisor, quotient, remainder, not_valid, idle);
-    parameter BITSIZE = 16;
-    parameter INDEXSIZE = 4; //= log2(BITSIZE)
-    parameter IDLE = 2'b00, PRECALC = 2'b01, CALC = 2'b11, POSTCALC = 2'b10;
+module divider_param#(parameter BITSIZE = 16)(clk, rst, strt, dividend, divisor, quotient, remainder, infinite, idle);
+    localparam INDEXSIZE = $clog2(BITSIZE);
+    localparam IDLE = 2'b00, PRECALC = 2'b01, CALC = 2'b11, POSTCALC = 2'b10;
     
     input clk, rst, strt;
     input [(BITSIZE-1):0] dividend, divisor;
     output reg [(BITSIZE-1):0] quotient, remainder;
-    output not_valid; //True if divison result is not valid
+    output infinite; //True if divison result is not valid
     output idle; //True when ready to
     reg [BITSIZE:0] dividend_reg, divisor_reg; //extra bit for sign check
     wire update_divident; //update dividend value after test substraction, little typo 
@@ -20,7 +19,7 @@ module divider_param(clk, rst, strt, dividend, divisor, quotient, remainder, not
     reg [1:0] state; //00: idle, 01: precalculate, 11: calcuate
     reg [(INDEXSIZE-1):0] q_index;
 
-    assign not_valid = ~|divisor; //not valid if divisor is 0
+    assign infinite = ~|divisor; //not valid if divisor is 0
     assign idle = ~|state; //state 00
     assign test_sub_res = dividend_reg + (~divisor_reg) + 9'd1; //test subtraction
     assign sign_of_test_sub = ~test_sub_res[BITSIZE];
@@ -40,7 +39,7 @@ module divider_param(clk, rst, strt, dividend, divisor, quotient, remainder, not
                             begin
                                 if(strt)
                                     begin
-                                        state <= (not_valid) ? POSTCALC : ((divisor[BITSIZE-1]) ? CALC : PRECALC);
+                                        state <= (infinite) ? POSTCALC : ((divisor[BITSIZE-1]) ? CALC : PRECALC);
                                     end
                             end
                         PRECALC:
@@ -141,22 +140,4 @@ module divider_param(clk, rst, strt, dividend, divisor, quotient, remainder, not
                     end
             endcase
         end
-    
-    
-    //debug code
-    initial
-        begin
-             $dumpfile("internal_signals.vcd");
-             $dumpvars(0, state);
-             $dumpvars(1, dividend_reg);
-             $dumpvars(2, divisor_reg);
-             $dumpvars(3, test_sub_res);
-             $dumpvars(4, sign_of_test_sub);
-             $dumpvars(5, q_index);
-             $dumpvars(6, divisor);
-             $dumpvars(7, quotient);
-             $dumpvars(8, remainder);
-        end
-
-
 endmodule

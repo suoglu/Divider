@@ -1,12 +1,12 @@
 //yigit suoglu 
 // 8 bit divider module
 // dividend = divisor * quotient + remainder
-module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_valid, idle);
+module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, infinite, idle);
     parameter IDLE = 2'b00, PRECALC = 2'b01, CALC = 2'b11, POSTCALC = 2'b10;
     input clk, rst, strt;
     input [7:0] dividend, divisor;
     output reg [7:0] quotient, remainder;
-    output not_valid; //True if divison result is not valid
+    output infinite; //True if divison result is not valid
     output idle; //True when ready to
     reg [8:0] dividend_reg, divisor_reg; //extra bit for sign check
     wire update_divident; //update dividend value after test substraction, little typo 
@@ -15,7 +15,7 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
     reg [1:0] state; //00: idle, 01: precalculate, 11: calcuate
     reg [2:0] q_index;
 
-    assign not_valid = ~|divisor; //not valid if divisor is 0
+    assign infinite = ~|divisor; //not valid if divisor is 0
     assign idle = ~|state; //state 00
     assign test_sub_res = dividend_reg + (~divisor_reg) + 9'd1; //test subtraction
     assign sign_of_test_sub = ~test_sub_res[8];
@@ -35,7 +35,7 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
                             begin
                                 if(strt)
                                     begin
-                                        state <= (not_valid) ? POSTCALC : ((divisor[7]) ? CALC : PRECALC);
+                                        state <= (infinite) ? POSTCALC : ((divisor[7]) ? CALC : PRECALC);
                                     end
                             end
                         PRECALC:
@@ -136,22 +136,4 @@ module divider_8bit(clk, rst, strt, dividend, divisor, quotient, remainder, not_
                     end
             endcase
         end
-    
-    
-    //debug code
-    initial
-        begin
-             $dumpfile("internal_signals.vcd");
-             $dumpvars(0, state);
-             $dumpvars(1, dividend_reg);
-             $dumpvars(2, divisor_reg);
-             $dumpvars(3, test_sub_res);
-             $dumpvars(4, sign_of_test_sub);
-             $dumpvars(5, q_index);
-             $dumpvars(6, divisor);
-             $dumpvars(7, quotient);
-             $dumpvars(8, remainder);
-        end
-
-
 endmodule

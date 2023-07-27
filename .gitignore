@@ -1,6 +1,31 @@
+# For macOS systems
 .DS_Store
-o.out
-*.vcd
+
+# Vivado & Vitis directory
 *vivado*
-*tmp*
-TMP*
+*vitis*
+.Xil
+
+# Text editor configs and enviorements
+*.geany
+.vscode
+venv
+.idea
+
+# For icarus Verilog
+*.out
+*.vcd
+
+# Diagrams
+*.drawio
+
+# Utils
+.uart_tool/
+
+# Any tmp
+*.tmp*
+WIP*
+edit_*
+
+# Repo specific
+

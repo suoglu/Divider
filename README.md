@@ -36,7 +36,7 @@ Following parameters can be used to modify the size of operation and the output 
 Ports of the all modules/IPs named in same manner.
 
 |   Port   | Type | Width | Description | Notes |
-| :------: | :----: | :----: | :----: | :-----:  | ---- |
+| :------: | :----: | :----: | :----: |  ---- |
 | `clk` | I | 1 | System Clock | |
 | `rst` | I | 1 | System Reset | |
 | `start` | I | 1 | Start Calculation | |

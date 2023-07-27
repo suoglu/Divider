@@ -5,7 +5,8 @@
  * ----------------------------------------- *
  * File        : divider.v                   *
  * Author      : Yigit Suoglu                *
- * Last Edit   : 25/07/2023                  *
+ * Last Edit   : 27/07/2023                  *
+ * Licance     : CERN-OHL-W                  *
  * ----------------------------------------- *
  * Description : Sequential divider hardware *
  * ----------------------------------------- */
@@ -85,7 +86,7 @@ module divider#(
 
   //Operand Logic
   always@(posedge clk) begin
-    if(state == IDLE) begin
+    if(startCalculation) begin
       divisorOp <= divisor;
     end else case(state)
       PREP: divisorOp <= divisorOp<<1;
@@ -93,8 +94,8 @@ module divider#(
     endcase
   end
   always@(posedge clk) begin
-    if(state == IDLE) begin
-      dividendOp <= dividendOp;
+    if(startCalculation) begin
+      dividendOp <= dividend;
     end else begin
       dividendOp <= subtract ? dividendOp-divisorOp : dividendOp; 
     end
@@ -108,10 +109,21 @@ module divider#(
   end
   assign remainder = dividendOp;
 
+  //State Transactions
+  always@(posedge clk) begin
+    if(rst) begin
+      state <= IDLE;
+    end else case(state)
+      IDLE: state <=  startCalculation ? PREP : state;
+      PREP: state <=         stopShift ? CALC : state;
+      CALC: state <= shiftCounter == 0 ? IDLE : state;
+    endcase
+  end
+
 
   //Optional Logic
   generate //Caching functionality
-    if (CACHING) begin
+    if(CACHING) begin
       reg [WIDTH-1:0] dividend_cached, divisor_cached;
       assign useCache = (dividend == dividend_cached) && (divisor == divisor_cached);
       always@(posedge clk) begin

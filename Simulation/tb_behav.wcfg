@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="72.833 ns"></ZoomStartTime>
+      <ZoomEndTime time="136.634 ns"></ZoomEndTime>
+      <Cursor1Time time="126.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="330"></NameColumnWidth>
+      <ValueColumnWidth column_width="120"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="20" />
+   <wvobject type="logic" fp_name="/tb/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/rst">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/start">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/dividend">
+      <obj_property name="ElementShortName">dividend[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dividend[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/divisor">
+      <obj_property name="ElementShortName">divisor[31:0]</obj_property>
+      <obj_property name="ObjectShortName">divisor[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/remainder">
+      <obj_property name="ElementShortName">remainder[31:0]</obj_property>
+      <obj_property name="ObjectShortName">remainder[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/quotient">
+      <obj_property name="ElementShortName">quotient[31:0]</obj_property>
+      <obj_property name="ObjectShortName">quotient[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/remainder_ref">
+      <obj_property name="ElementShortName">remainder_ref[31:0]</obj_property>
+      <obj_property name="ObjectShortName">remainder_ref[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/quotient_ref">
+      <obj_property name="ElementShortName">quotient_ref[31:0]</obj_property>
+      <obj_property name="ObjectShortName">quotient_ref[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/error">
+      <obj_property name="ElementShortName">error</obj_property>
+      <obj_property name="ObjectShortName">error</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/valid">
+      <obj_property name="ElementShortName">valid</obj_property>
+      <obj_property name="ObjectShortName">valid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/zeroErr">
+      <obj_property name="ElementShortName">zeroErr</obj_property>
+      <obj_property name="ObjectShortName">zeroErr</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/uut/state">
+      <obj_property name="ElementShortName">state[1:0]</obj_property>
+      <obj_property name="ObjectShortName">state[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/uut/dividendOp">
+      <obj_property name="ElementShortName">dividendOp[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dividendOp[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb/uut/divisorOp">
+      <obj_property name="ElementShortName">divisorOp[32:0]</obj_property>
+      <obj_property name="ObjectShortName">divisorOp[32:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/uut/zeroDivide">
+      <obj_property name="ElementShortName">zeroDivide</obj_property>
+      <obj_property name="ObjectShortName">zeroDivide</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/uut/useCache">
+      <obj_property name="ElementShortName">useCache</obj_property>
+      <obj_property name="ObjectShortName">useCache</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/uut/startCalculation">
+      <obj_property name="ElementShortName">startCalculation</obj_property>
+      <obj_property name="ObjectShortName">startCalculation</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/uut/subtract">
+      <obj_property name="ElementShortName">subtract</obj_property>
+      <obj_property name="ObjectShortName">subtract</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb/uut/stopShift">
+      <obj_property name="ElementShortName">stopShift</obj_property>
+      <obj_property name="ObjectShortName">stopShift</obj_property>
+   </wvobject>
+</wave_config>

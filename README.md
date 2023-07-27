@@ -15,7 +15,7 @@
 
 ## About
 
-This repository contains an integer divider module. And old and slower divider design can be found in [obsolete/](tree/main/obsolete/), but not suggested to be used.
+This repository contains an integer divider module. And old and slower divider design can be found in direcoty *obsolete*, but not suggested to be used.
 
 ## Interface Description
 
@@ -65,7 +65,7 @@ All values in this section are for Xilinx Artix-7 (_XC7A100TCSG324-1_) FPGA with
 
 ## Testing
 
-Files related to testing can be found in [Testing](tree/main/Testing) directory. Test block diagram contains a VIO and a ILA connected to divider module. Each connection contains a pipeline register.
+Files related to testing can be found in *Testing* directory. Test block diagram contains a VIO and a ILA connected to divider module. Each connection contains a pipeline register.
 
 ### Status Information
 

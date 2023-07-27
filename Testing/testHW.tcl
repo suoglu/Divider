@@ -131,6 +131,7 @@ set bCheckIPs 1
 if { $bCheckIPs == 1 } {
    set list_check_ips "\ 
 xilinx.com:ip:clk_wiz:6.0\
+xilinx.com:ip:system_ila:1.1\
 xilinx.com:ip:util_vector_logic:2.0\
 xilinx.com:ip:vio:3.0\
 "
@@ -260,6 +261,7 @@ proc create_root_design { parentCell } {
      return 1
    }
     set_property -dict [ list \
+   CONFIG.CACHING {1} \
    CONFIG.WIDTH {32} \
  ] $divider_0
 
@@ -361,6 +363,20 @@ proc create_root_design { parentCell } {
    CONFIG.WIDTH {1} \
  ] $register_6
 
+  # Create instance: system_ila_0, and set properties
+  set system_ila_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:system_ila:1.1 system_ila_0 ]
+  set_property -dict [ list \
+   CONFIG.C_MON_TYPE {NATIVE} \
+   CONFIG.C_NUM_OF_PROBES {7} \
+   CONFIG.C_PROBE0_TYPE {0} \
+   CONFIG.C_PROBE1_TYPE {0} \
+   CONFIG.C_PROBE2_TYPE {0} \
+   CONFIG.C_PROBE3_TYPE {0} \
+   CONFIG.C_PROBE4_TYPE {0} \
+   CONFIG.C_PROBE5_TYPE {0} \
+   CONFIG.C_PROBE6_TYPE {0} \
+ ] $system_ila_0
+
   # Create instance: util_vector_logic_0, and set properties
   set util_vector_logic_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:util_vector_logic:2.0 util_vector_logic_0 ]
   set_property -dict [ list \
@@ -372,7 +388,8 @@ proc create_root_design { parentCell } {
   # Create instance: vio_0, and set properties
   set vio_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:vio:3.0 vio_0 ]
   set_property -dict [ list \
-   CONFIG.C_NUM_PROBE_IN {4} \
+   CONFIG.C_EN_PROBE_IN_ACTIVITY {0} \
+   CONFIG.C_NUM_PROBE_IN {0} \
    CONFIG.C_NUM_PROBE_OUT {3} \
    CONFIG.C_PROBE_OUT0_WIDTH {32} \
    CONFIG.C_PROBE_OUT1_WIDTH {32} \
@@ -380,23 +397,30 @@ proc create_root_design { parentCell } {
 
   # Create port connections
   connect_bd_net -net clk_100MHz_1 [get_bd_ports clk_100MHz] [get_bd_pins clk_wiz_0/clk_in1]
-  connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins divider_0/clk] [get_bd_pins register_0/clk] [get_bd_pins register_1/clk] [get_bd_pins register_2/clk] [get_bd_pins register_3/clk] [get_bd_pins register_4/clk] [get_bd_pins register_5/clk] [get_bd_pins register_6/clk] [get_bd_pins vio_0/clk]
+  connect_bd_net -net clk_wiz_0_clk_out1 [get_bd_pins clk_wiz_0/clk_out1] [get_bd_pins divider_0/clk] [get_bd_pins register_0/clk] [get_bd_pins register_1/clk] [get_bd_pins register_2/clk] [get_bd_pins register_3/clk] [get_bd_pins register_4/clk] [get_bd_pins register_5/clk] [get_bd_pins register_6/clk] [get_bd_pins system_ila_0/clk] [get_bd_pins vio_0/clk]
+  connect_bd_net -net divident [get_bd_pins register_2/in_i] [get_bd_pins system_ila_0/probe4] [get_bd_pins vio_0/probe_out0]
+  set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets divident]
   connect_bd_net -net divider_0_quotient [get_bd_pins divider_0/quotient] [get_bd_pins register_0/in_i]
   connect_bd_net -net divider_0_remainder [get_bd_pins divider_0/remainder] [get_bd_pins register_1/in_i]
   connect_bd_net -net divider_0_valid [get_bd_pins divider_0/valid] [get_bd_pins register_6/in_i]
   connect_bd_net -net divider_0_zeroErr [get_bd_pins divider_0/zeroErr] [get_bd_pins register_5/in_i]
-  connect_bd_net -net register_0_out_o [get_bd_pins register_0/out_o] [get_bd_pins vio_0/probe_in0]
-  connect_bd_net -net register_1_out_o [get_bd_pins register_1/out_o] [get_bd_pins vio_0/probe_in1]
+  connect_bd_net -net divisor [get_bd_pins register_3/in_i] [get_bd_pins system_ila_0/probe5] [get_bd_pins vio_0/probe_out1]
+  set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets divisor]
+  connect_bd_net -net quo [get_bd_pins register_0/out_o] [get_bd_pins system_ila_0/probe2]
+  set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets quo]
   connect_bd_net -net register_2_out_o [get_bd_pins divider_0/dividend] [get_bd_pins register_2/out_o]
   connect_bd_net -net register_3_out_o [get_bd_pins divider_0/divisor] [get_bd_pins register_3/out_o]
   connect_bd_net -net register_4_out_o [get_bd_pins divider_0/start] [get_bd_pins register_4/out_o]
-  connect_bd_net -net register_5_out_o [get_bd_pins register_5/out_o] [get_bd_pins vio_0/probe_in2]
-  connect_bd_net -net register_6_out_o [get_bd_pins register_6/out_o] [get_bd_pins vio_0/probe_in3]
+  connect_bd_net -net remainder [get_bd_pins register_1/out_o] [get_bd_pins system_ila_0/probe1]
+  set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets remainder]
   connect_bd_net -net reset_rtl_0_1 [get_bd_ports ck_rst] [get_bd_pins clk_wiz_0/resetn] [get_bd_pins util_vector_logic_0/Op1]
+  connect_bd_net -net start [get_bd_pins register_4/in_i] [get_bd_pins system_ila_0/probe6] [get_bd_pins vio_0/probe_out2]
+  set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets start]
   connect_bd_net -net util_vector_logic_0_Res [get_bd_pins divider_0/rst] [get_bd_pins util_vector_logic_0/Res]
-  connect_bd_net -net vio_0_probe_out0 [get_bd_pins register_2/in_i] [get_bd_pins vio_0/probe_out0]
-  connect_bd_net -net vio_0_probe_out1 [get_bd_pins register_3/in_i] [get_bd_pins vio_0/probe_out1]
-  connect_bd_net -net vio_0_probe_out2 [get_bd_pins register_4/in_i] [get_bd_pins vio_0/probe_out2]
+  connect_bd_net -net valid [get_bd_pins register_6/out_o] [get_bd_pins system_ila_0/probe0]
+  set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets valid]
+  connect_bd_net -net yero [get_bd_pins register_5/out_o] [get_bd_pins system_ila_0/probe3]
+  set_property HDL_ATTRIBUTE.DEBUG {true} [get_bd_nets yero]
 
   # Create address segments
 

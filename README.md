@@ -65,7 +65,7 @@ All values in this section are for Xilinx Artix-7 (_XC7A100TCSG324-1_) FPGA with
 
 ## Testing
 
-Files related to testing can be found in [Testing](blob/main/Testing) directory. Test block diagram contains a VIO connected to divider module. Each connection contains a pipeline register.
+Files related to testing can be found in [Testing](blob/main/Testing) directory. Test block diagram contains a VIO and a ILA connected to divider module. Each connection contains a pipeline register.
 
 ### Status Information
 

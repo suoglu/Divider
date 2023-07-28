@@ -6,7 +6,7 @@
  * File        : divider.v                   *
  * Author      : Yigit Suoglu                *
  * Last Edit   : 27/07/2023                  *
- * Licance     : CERN-OHL-W                  *
+ * Licence     : CERN-OHL-W                  *
  * ----------------------------------------- *
  * Description : Sequential divider hardware *
  * ----------------------------------------- */

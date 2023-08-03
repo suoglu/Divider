@@ -7,6 +7,7 @@
 3. Performance and Resource Utilization
 4. Testing
 5. Status Information
+6. Licence
 
 [![Repo on GitLab](https://img.shields.io/badge/repo-GitLab-6C488A.svg)](https://gitlab.com/suoglu/Divider)
 [![Repo on GitHub](https://img.shields.io/badge/repo-GitHub-3D76C2.svg)](https://github.com/suoglu/Divider)
@@ -71,3 +72,7 @@ Files related to testing can be found in *Testing* directory. Test block diagram
 
 - Simulation: 27 July 2023 with [Vivado Simulator 2021.1.1](https://www.xilinx.com/products/design-tools/vivado.html).
 - Test: 27 July 2023 with [Digilent Arty A7](https://digilent.com/reference/programmable-logic/arty-a7/reference-manual)
+
+## Licence
+
+CERN Open Hardware Licence Version 2 - Weakly Reciprocal
